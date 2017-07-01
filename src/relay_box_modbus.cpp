@@ -7,9 +7,11 @@
 #include <ModbusSerial.h>
 ModbusSerial mb;
 
+#define SSerialGND       10
+#define SSerialRX        9  //Serial Receive pin
+#define SSerialTX        8  //Serial Transmit pin
+#define SSerialVCC       7
 #define SSerialTxControl 6   //RS485 Direction control
-#define SSerialRX        8  //Serial Receive pin
-#define SSerialTX        9  //Serial Transmit pin
 SoftwareSerial RS485Serial(SSerialRX, SSerialTX); // RX, TX
 #endif
 
@@ -103,6 +105,14 @@ void process_actions() {
 
 void modbus_setup() {
 	Serial.println("ModBus Slave RELAY_BOX:4 for lua/Aliens.lua");
+
+#ifdef EMULATE_RS3485_POWER_PINS
+	pinMode(SSerialVCC, OUTPUT);
+	digitalWrite(SSerialVCC, HIGH);
+	pinMode(SSerialGND, OUTPUT);
+	digitalWrite(SSerialGND, LOW);
+	delay(10);
+#endif
 
 #ifndef USE_ESP8266_TCP
 	mb.config(&RS485Serial, 57600, SSerialTxControl);

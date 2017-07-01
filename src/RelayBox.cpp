@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "relay_box_modbus.h"
 
-#define MY_TEST_MODE
+// #define MY_TEST_MODE
 
 void setup() {
 	Serial.begin(115200);
