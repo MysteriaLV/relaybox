@@ -66,22 +66,22 @@ void process_actions() {
 		case 2 : // Put here code for Enable_top_lights1
 			Serial.println("[Enable_top_lights1] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS1, RELAY_OFF);
+			digitalWrite(CEILING_LIGHTS1, RELAY_ON);
 			break;
 		case 3 : // Put here code for Enable_top_lights2
 			Serial.println("[Enable_top_lights2] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS1, RELAY_ON);
+			digitalWrite(CEILING_LIGHTS2, RELAY_ON);
 			break;
 		case 4 : // Put here code for Disable_top_lights1
 			Serial.println("[Disable_top_lights1] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS2, RELAY_OFF);
+			digitalWrite(CEILING_LIGHTS1, RELAY_OFF);
 			break;
 		case 5 : // Put here code for Disable_top_lights2
 			Serial.println("[Disable_top_lights2] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS2, RELAY_ON);
+			digitalWrite(CEILING_LIGHTS2, RELAY_OFF);
 			break;
 		case 6 : // Put here code for Unlock_exit_door
 			Serial.println("[Unlock_exit_door] action fired");
