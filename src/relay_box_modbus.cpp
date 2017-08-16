@@ -44,6 +44,8 @@ ModbusSerial mb;
 ModbusIP mb;
 #endif
 
+Atm_timer smoke_timer;
+
 // Action handler. Add all your actions mapped by action_id in rs485_node of Lua script
 void process_actions() {
 	if (mb.Hreg(ACTIONS) == 0)
@@ -54,10 +56,11 @@ void process_actions() {
 			Serial.println("[Reset] action fired");
 			digitalWrite(LED_BUILTIN, HIGH);
 
-			digitalWrite(OUT1, RELAY_OFF);
-			digitalWrite(OUT2, RELAY_OFF);
-			digitalWrite(OUT3, RELAY_OFF);
-			digitalWrite(OUT4, RELAY_OFF);
+			ceiling_lights1.off();
+			ceiling_lights2.off();
+			exit_door.off();
+			smoke_machine.off();
+
 			digitalWrite(OUT5, RELAY_OFF);
 			digitalWrite(OUT6, RELAY_OFF);
 			digitalWrite(OUT7, RELAY_OFF);
@@ -66,32 +69,38 @@ void process_actions() {
 		case 2 : // Put here code for Enable_top_lights1
 			Serial.println("[Enable_top_lights1] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS1, RELAY_ON);
+			ceiling_lights1.on();
 			break;
 		case 3 : // Put here code for Enable_top_lights2
 			Serial.println("[Enable_top_lights2] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS2, RELAY_ON);
+			ceiling_lights2.on();
 			break;
 		case 4 : // Put here code for Disable_top_lights1
 			Serial.println("[Disable_top_lights1] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS1, RELAY_OFF);
+			ceiling_lights1.off();
 			break;
 		case 5 : // Put here code for Disable_top_lights2
 			Serial.println("[Disable_top_lights2] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(CEILING_LIGHTS2, RELAY_OFF);
+			ceiling_lights2.off();
 			break;
 		case 6 : // Put here code for Unlock_exit_door
 			Serial.println("[Unlock_exit_door] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(EXIT_DOOR, RELAY_OFF);
+			exit_door.off();
 			break;
 		case 7 : // Put here code for Lock_exit_door
 			Serial.println("[Lock_exit_door] action fired");
 			digitalWrite(LED_BUILTIN, LOW);
-			digitalWrite(EXIT_DOOR, RELAY_ON);
+			exit_door.on();
+			break;
+		case 8 : // Put here code for Activate_smoke
+			Serial.println("[Activate_smoke] action fired");
+			digitalWrite(LED_BUILTIN, LOW);
+			smoke_machine.on();
+			smoke_timer.begin(10000).onFinish(smoke_machine, Atm_led::EVT_OFF).start();
 			break;
 		default:
 			break;

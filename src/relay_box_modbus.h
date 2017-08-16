@@ -4,6 +4,7 @@
 #define USE_HOLDING_REGISTERS_ONLY
 #include <Arduino.h>
 #include <Modbus.h>
+#include <Automaton.h>
 
 //////////////// registers of RELAY_BOX ///////////////////
 enum
@@ -20,6 +21,8 @@ extern void modbus_setup();
 extern void modbus_loop();
 extern void modbus_set(word event, word value);
 
+extern Atm_led ceiling_lights1, ceiling_lights2, exit_door, smoke_machine;
+
 #define OUT1 PIN2
 #define OUT2 PIN3
 #define OUT3 PIN4
@@ -28,9 +31,5 @@ extern void modbus_set(word event, word value);
 #define OUT6 PIN_A2
 #define OUT7 PIN_A1
 #define OUT8 PIN_A0
-
-#define CEILING_LIGHTS1 OUT1
-#define CEILING_LIGHTS2 OUT2
-#define EXIT_DOOR OUT3
 
 #endif //RELAY_BOX_MODBUS_H

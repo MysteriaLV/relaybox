@@ -2,11 +2,13 @@
 #include "relay_box_modbus.h"
 
 // #define MY_TEST_MODE
+Atm_led ceiling_lights1, ceiling_lights2, exit_door, smoke_machine;
 
 void setup() {
 	Serial.begin(115200);
 	modbus_setup();
 
+#ifdef MY_TEST_MODE
 	pinMode(OUT1, OUTPUT);
 	pinMode(OUT2, OUTPUT);
 	pinMode(OUT3, OUTPUT);
@@ -24,10 +26,18 @@ void setup() {
 	digitalWrite(OUT6, HIGH);
 	digitalWrite(OUT7, HIGH);
 	digitalWrite(OUT8, HIGH);
+#else
+	ceiling_lights1.begin(OUT1, true).off();
+	ceiling_lights2.begin(OUT2, true).off();
+	exit_door.begin(OUT3, true).off();
+	smoke_machine.begin(OUT4, true).off();
+#endif
+
 }
 
 void loop() {
 	modbus_loop();
+	automaton.run();
 
 #ifdef MY_TEST_MODE
 	digitalWrite(OUT1, HIGH);
