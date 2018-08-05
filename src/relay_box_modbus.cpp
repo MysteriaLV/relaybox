@@ -96,12 +96,6 @@ void process_actions() {
 			digitalWrite(LED_BUILTIN, LOW);
 			exit_door.on();
 			break;
-		case 8 : // Put here code for Activate_smoke
-			Serial.println("[Activate_smoke] action fired");
-			digitalWrite(LED_BUILTIN, LOW);
-			smoke_machine.on();
-			smoke_timer.begin(10000).onFinish(smoke_machine, Atm_led::EVT_OFF).start();
-			break;
 		default:
 			break;
 	}
